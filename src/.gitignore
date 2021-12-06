@@ -1,9 +1,0 @@
-*/.idea/
-.idea/
-*/target/
-target/
-*/.gitattributes
-.gitattributes
-*.iml
-*/.project
-.project

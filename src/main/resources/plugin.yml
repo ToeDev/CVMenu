@@ -1,0 +1,17 @@
+name: CVMenu
+main: org.cubeville.cvmenu.CVMenu
+author: ToeMan_
+version: 0.1
+api-version: 1.16
+
+depend: [CVTools,CVLoadouts,BetonQuest]
+
+commands:
+  menu:
+    permission: cvmenu.admin
+
+permissions:
+
+  cvmenu.admin:
+    description: Gives player access to every CVMenu command
+    default: op

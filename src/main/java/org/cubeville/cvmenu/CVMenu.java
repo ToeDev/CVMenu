@@ -72,6 +72,7 @@ public class CVMenu extends JavaPlugin {
         commandParser.addCommand(new MenuInfo(this));
 
         commandParser.addCommand(new MenuAddCondition(this));
+        commandParser.addCommand(new MenuRemoveCondition(this));
         //commandParser.addCommand(new MenuDisplay());
 
         Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);

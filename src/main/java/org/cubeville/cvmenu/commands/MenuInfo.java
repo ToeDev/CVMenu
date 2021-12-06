@@ -91,14 +91,37 @@ public class MenuInfo extends Command {
             }
         } else {
             out.add(new TextComponent("§2--------------------§a" + menu.getMenuName() + "§2--------------------"));
-
-
-
-
-
-
-
-
+            out.add(new TextComponent("§6Menu Size: §9" + menu.getSize()));
+            TextComponent condStatus = new TextComponent("§6Contains BQ Condition(s): ");
+            for(int i = 0; i < menu.getSize(); i++) {
+                if(menu.getConditionsBQ(i) != null) {
+                    condStatus.addExtra("§9true");
+                    break;
+                } else if(i == menu.getSize() - 1) {
+                    condStatus.addExtra("§9false");
+                }
+            }
+            out.add(condStatus);
+            TextComponent eveStatus = new TextComponent("§6Contains BQ Event(s): ");
+            for(int i = 0; i < menu.getSize(); i++) {
+                if(menu.getEventsBQ(i) != null) {
+                    eveStatus.addExtra("§9true");
+                    break;
+                } else if(i == menu.getSize() - 1) {
+                    eveStatus.addExtra("§9false");
+                }
+            }
+            out.add(eveStatus);
+            TextComponent cmdStatus = new TextComponent("§6Contains Command(s): ");
+            for(int i = 0; i < menu.getSize(); i++) {
+                if(menu.getCommands(i) != null) {
+                    cmdStatus.addExtra("§9true");
+                    break;
+                } else if(i == menu.getSize() - 1) {
+                    cmdStatus.addExtra("§9false");
+                }
+            }
+            out.add(cmdStatus);
         }
         for (TextComponent o : out) {
             player.spigot().sendMessage(o);

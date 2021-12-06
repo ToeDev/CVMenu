@@ -28,7 +28,7 @@ public class MenuAddCondition extends Command {
     public CommandResponse execute(Player player, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
         MenuManager manager = plugin.getMenuManager();
         if(manager.getMenu((String) baseParameters.get(0)) == null) {
-            throw new CommandExecutionException(org.bukkit.ChatColor.RED + "Menu " + org.bukkit.ChatColor.GOLD + baseParameters.get(0) + org.bukkit.ChatColor.RED + " doesn't exist!");
+            throw new CommandExecutionException(ChatColor.RED + "Menu " + ChatColor.GOLD + baseParameters.get(0) + ChatColor.RED + " doesn't exist!");
         }
         MenuContainer menu = manager.getMenu((String) baseParameters.get(0));
         int slot = -1;
@@ -40,7 +40,7 @@ public class MenuAddCondition extends Command {
         }
         String condition = (String) parameters.get("condition");
         if(slot == -1) {
-            for(int i = 0; i < menu.getSize() - 1; i++) {
+            for(int i = 0; i < menu.getSize(); i++) {
                 if(!menu.containsConditionBQ(i, condition.toLowerCase())) {
                     menu.addConditionBQ(i, condition.toLowerCase());
                 }

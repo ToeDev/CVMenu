@@ -113,7 +113,7 @@ public class MenuContainer implements ConfigurationSerializable {
     }
 
     public Set<String> getConditionsBQ(int slot) {
-        if(conditionsBQ.get(0) != null) {
+        if(conditionsBQ.get(slot) != null) {
             return conditionsBQ.get(slot);
         }
         return null;
@@ -140,8 +140,12 @@ public class MenuContainer implements ConfigurationSerializable {
         conditionsBQ.get(slot).remove(condition.toLowerCase());
     }
 
+    public void removeAllConditionsBQ(int slot) {
+        conditionsBQ.remove(slot);
+    }
+
     public Set<String> getEventsBQ(int slot) {
-        if(eventsBQ.get(0) != null) {
+        if(eventsBQ.get(slot) != null) {
             return eventsBQ.get(slot);
         }
         return null;
@@ -163,7 +167,7 @@ public class MenuContainer implements ConfigurationSerializable {
     }
 
     public Set<String> getCommands(int slot) {
-        if(commands.get(0) != null) {
+        if(commands.get(slot) != null) {
             return commands.get(slot);
         }
         return null;

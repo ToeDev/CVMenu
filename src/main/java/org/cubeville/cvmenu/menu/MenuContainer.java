@@ -2,39 +2,69 @@ package org.cubeville.cvmenu.menu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class MenuContainer implements ConfigurationSerialization {
+@SerializableAs("MenuContainer")
+public class MenuContainer implements ConfigurationSerializable {
 
     private String menuName;
     private Inventory inventory;
 
-    private Map<Integer, Set<String>> conditionsBQ;
-    private Map<Integer, Set<String>> eventsBQ;
-    private Map<Integer, Set<String>> commands;
+    private final Map<Integer, Set<String>> conditionsBQ;
+    private final Map<Integer, Set<String>> eventsBQ;
+    private final Map<Integer, Set<String>> commands;
+
+    @SuppressWarnings("unchecked")
+    public MenuContainer(Map<String, Object> config) {
+        System.out.println(config.get("name") + " loaded from config");
+        menuName = (String) config.get("name");
+        conditionsBQ = new HashMap<>();
+        eventsBQ = new HashMap<>();
+        commands = new HashMap<>();
+        inventory = Bukkit.createInventory(null, config.size() - 2, (String) config.get("name") + ChatColor.RESET);
+        for(int i = 0; i < config.size() - 2; i++) {
+            Map<String, Object> slot = (Map<String, Object>) config.get("Slot" + i);
+            if(slot.get("conditionsBQ") != null) {
+                Set<String> conditions = new HashSet<>((Collection<? extends String>) slot.get("conditionsBQ"));
+                conditionsBQ.put(i, conditions);
+            }
+            if(slot.get("eventsBQ") != null) {
+                Set<String> events = new HashSet<>((Collection<? extends String>) slot.get("eventsBQ"));
+                eventsBQ.put(i, events);
+            }
+            if(slot.get("commands") != null) {
+                Set<String> cmds = new HashSet<>((Collection<? extends String>) slot.get("commands"));
+                commands.put(i, cmds);
+            }
+            if(slot.get("commands") != null) commands.put(i, (Set<String>) slot.get("commands"));
+            inventory.setItem(i, (ItemStack) slot.get("item"));
+        }
+    }
 
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> ret = new HashMap<>();
-        Map<Integer, Set<String>> conditionsBQ1 = new HashMap<>();
-        Map<Integer, Set<String>> eventsBQ1 = new HashMap<>();
-        Map<Integer, Set<String>> commands1 = new HashMap<>();
         ret.put("name", menuName);
-        ret.put("conditions", conditionsBQ);
-        ret.put("events", eventsBQ);
-        ret.put("commands", commands);
-        {
-            List<ItemStack> itemList = new ArrayList<>();
-            for(int i = 0; i < inventory.getSize(); i++) {
+        for(int i = 0; i < inventory.getSize(); i++) {
+            Map<String, Object> out = new HashMap<>();
+            List<String> condList = new ArrayList<>();
+            if(conditionsBQ.get(i) != null && !conditionsBQ.get(i).isEmpty()) condList.addAll(conditionsBQ.get(i));
+            out.put("conditionsBQ", condList);
+            List<String> eveList = new ArrayList<>();
+            if(eventsBQ.get(i) != null && !eventsBQ.get(i).isEmpty()) eveList.addAll(eventsBQ.get(i));
+            out.put("eventsBQ", eveList);
+            List<String> cmdList = new ArrayList<>();
+            if(commands.get(i) != null && !commands.get(i).isEmpty()) cmdList.addAll(commands.get(i));
+            out.put("commands", cmdList);
+            out.put("item", inventory.getItem(i));
 
-                itemList.add(inventory.getItem(i));
-            }
-            ret.put("slots", itemList);
+            ret.put("Slot" + i, out);
         }
         return ret;
     }
@@ -59,6 +89,10 @@ public class MenuContainer implements ConfigurationSerialization {
         inventory.setContents(oldInv.getContents());
     }
 
+    public int getSize() {
+        return inventory.getSize();
+    }
+
     /*public void setMenuSize(int size) {
         Inventory oldInv = inventory;
         inventory = Bukkit.cre
@@ -72,16 +106,35 @@ public class MenuContainer implements ConfigurationSerialization {
         player.openInventory(inventory);
     }
 
+    public String getSlotItem(int slot) {
+        if(inventory.getItem(slot) != null) {
+            return Objects.requireNonNull(inventory.getItem(slot)).getType().toString();
+        }
+        return "none";
+    }
+
     public Set<String> getConditionsBQ(int slot) {
-        return conditionsBQ.get(slot);
+        if(conditionsBQ.get(0) != null) {
+            return conditionsBQ.get(slot);
+        }
+        return null;
     }
 
     public boolean containsConditionBQ(int slot, String condition) {
+        if(conditionsBQ.get(slot) == null) {
+            return false;
+        }
         return conditionsBQ.get(slot).contains(condition.toLowerCase());
     }
 
     public void addConditionBQ(int slot, String condition) {
-        conditionsBQ.get(slot).add(condition.toLowerCase());
+        if(conditionsBQ.get(slot) == null) {
+            Set<String> conditions = new HashSet<>();
+            conditions.add(condition);
+            conditionsBQ.put(slot, conditions);
+        } else {
+            conditionsBQ.get(slot).add(condition.toLowerCase());
+        }
     }
 
     public void removeConditionBQ(int slot, String condition) {
@@ -89,10 +142,16 @@ public class MenuContainer implements ConfigurationSerialization {
     }
 
     public Set<String> getEventsBQ(int slot) {
-        return eventsBQ.get(slot);
+        if(eventsBQ.get(0) != null) {
+            return eventsBQ.get(slot);
+        }
+        return null;
     }
 
     public boolean containsEventBQ(int slot, String event) {
+        if(eventsBQ.get(slot) == null) {
+            return false;
+        }
         return eventsBQ.get(slot).contains(event.toLowerCase());
     }
 
@@ -105,10 +164,16 @@ public class MenuContainer implements ConfigurationSerialization {
     }
 
     public Set<String> getCommands(int slot) {
-        return commands.get(slot);
+        if(commands.get(0) != null) {
+            return commands.get(slot);
+        }
+        return null;
     }
 
     public boolean containsCommand(int slot, String command) {
+        if(commands.get(slot) == null) {
+            return false;
+        }
         return commands.get(slot).contains(command.toLowerCase());
     }
 

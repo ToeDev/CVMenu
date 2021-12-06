@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.cubeville.commons.commands.CommandParser;
-import org.cubeville.cvloadouts.CVLoadouts;
 import org.cubeville.cvmenu.commands.*;
 import org.cubeville.cvmenu.menu.MenuContainer;
 import org.cubeville.cvmenu.menu.MenuManager;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
 
 public class CVMenu extends JavaPlugin {
 
-    private CVLoadouts cvLoadouts;
+    private static CVMenu cvMenu;
     private BetonQuest betonQuest;
 
     private MenuManager menuManager;
@@ -32,9 +31,8 @@ public class CVMenu extends JavaPlugin {
 
     public void onEnable() {
         this.logger = getLogger();
-        cvLoadouts = CVLoadouts.getInstance();
+        cvMenu = this;
         betonQuest = BetonQuest.getInstance();
-        menuManager = new MenuManager();
 
         final File dataDir = getDataFolder();
         if(!dataDir.exists()) {
@@ -62,20 +60,26 @@ public class CVMenu extends JavaPlugin {
         ConfigurationSerialization.registerClass(MenuContainer.class, "MenuContainer");
         ConfigurationSerialization.registerClass(MenuManager.class, "MenuManager");
 
+        menuManager = (MenuManager) getConfig().get("MenuManager");
+        if(menuManager == null) menuManager = new MenuManager();
+        menuManager.setManager(this);
+
         commandParser = new CommandParser();
         commandParser.addCommand(new MenuCreate(this));
         commandParser.addCommand(new MenuRemove(this));
         commandParser.addCommand(new MenuEdit(this));
-        //commandParser.addCommand(new MenuInfo());
-        //commandParser.addCommand(new MenuList());
+        commandParser.addCommand(new MenuList(this));
+        commandParser.addCommand(new MenuInfo(this));
+
+        commandParser.addCommand(new MenuAddCondition(this));
         //commandParser.addCommand(new MenuDisplay());
 
         Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
         logger.info(ChatColor.LIGHT_PURPLE + "Plugin Enabled Successfully");
     }
 
-    public CVLoadouts getCvLoadouts() {
-        return this.cvLoadouts;
+    public static CVMenu getCvMenu() {
+        return cvMenu;
     }
 
     public BetonQuest getBetonQuest() {
@@ -99,6 +103,7 @@ public class CVMenu extends JavaPlugin {
     }
 
     public void onDisable() {
+        cvMenu = null;
         logger.info(ChatColor.LIGHT_PURPLE + "Plugin Disabled Successfully");
     }
 }

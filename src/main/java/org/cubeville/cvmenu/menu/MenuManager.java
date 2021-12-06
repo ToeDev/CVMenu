@@ -1,11 +1,14 @@
 package org.cubeville.cvmenu.menu;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.cubeville.cvmenu.CVMenu;
 
 import java.util.*;
 
-public class MenuManager {
+@SerializableAs("MenuManager")
+public class MenuManager implements ConfigurationSerializable {
 
     Map<String, MenuContainer> menus;
 
@@ -13,6 +16,17 @@ public class MenuManager {
 
     public MenuManager() {
         menus = new HashMap<>();
+    }
+
+    @SuppressWarnings("unchecked")
+    public MenuManager(Map<String, Object> config) {
+        menus = (Map<String, MenuContainer>) config.get("menus");
+    }
+
+    public Map<String, Object> serialize() {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("menus", menus);
+        return ret;
     }
 
     public void createMenu(Player player, String name, int size) {
@@ -29,6 +43,13 @@ public class MenuManager {
 
     public boolean menuExists(String name) {
         return menus.containsKey(name.toLowerCase());
+    }
+
+    public MenuContainer getMenu(String menu) {
+        if(menuExists(menu)) {
+            return menus.get(menu);
+        }
+        return null;
     }
 
     public List<String> getAllMenuNames() {

@@ -42,7 +42,6 @@ public class MenuContainer implements ConfigurationSerializable {
                 Set<String> cmds = new HashSet<>((Collection<? extends String>) slot.get("commands"));
                 commands.put(i, cmds);
             }
-            if(slot.get("commands") != null) commands.put(i, (Set<String>) slot.get("commands"));
             inventory.setItem(i, (ItemStack) slot.get("item"));
         }
     }

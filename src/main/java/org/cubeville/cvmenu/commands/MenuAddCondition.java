@@ -39,6 +39,15 @@ public class MenuAddCondition extends Command {
             }
         }
         String condition = (String) parameters.get("condition");
+        if(slot == -1) {
+            for(int i = 0; i < menu.getSize() - 1; i++) {
+                if(!menu.containsConditionBQ(i, condition.toLowerCase())) {
+                    menu.addConditionBQ(i, condition.toLowerCase());
+                }
+            }
+            plugin.saveMenuManager();
+            return new CommandResponse(ChatColor.LIGHT_PURPLE + "Condition: " + ChatColor.GOLD + condition + ChatColor.LIGHT_PURPLE + " set on slots: " + ChatColor.GOLD + 0 + " - " + (menu.getSize() - 1) + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
+        }
         if(menu.containsConditionBQ(slot, condition.toLowerCase())) {
             throw new CommandExecutionException(ChatColor.RED + "Slot: " + ChatColor.GOLD + slot + ChatColor.RED + " already has condition: " + ChatColor.GOLD + condition + ChatColor.RED + " set on menu " + ChatColor.GOLD + menu.getMenuName());
         }

@@ -41,9 +41,14 @@ public class MenuInfo extends Command {
                 throw new CommandExecutionException(org.bukkit.ChatColor.RED + "Menu " + org.bukkit.ChatColor.GOLD + baseParameters.get(0) + org.bukkit.ChatColor.RED + " only contains " + ChatColor.GOLD + menu.getSize() + ChatColor.RED + " slots! Remember, the first slot is slot 0!");
             } else {
                 int slot = (int) parameters.get("slot");
-                out.add(new TextComponent("§2--------------------§a" + menu.getMenuName() + " Slot: " + slot + "§2--------------------"));
+                out.add(new TextComponent("§2--------------------§a" + menu.getMenuName() + ":" + slot + "§2--------------------"));
                 out.add(new TextComponent("§6Item: §9" + menu.getSlotItem(slot)));
-                out.add(new TextComponent("§6BQ Conditions:"));
+                TextComponent condLbl = new TextComponent("§6BQ Conditions: ");
+                TextComponent condLblClk = new TextComponent("§2[§9Add§2]");
+                condLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcondition " + menu.getMenuName() + " slot:" + slot + " condition:"));
+                condLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add condition to slot: " + slot).create()));
+                condLbl.addExtra(condLblClk);
+                out.add(condLbl);
                 if(menu.getConditionsBQ(slot) != null && !menu.getConditionsBQ(slot).isEmpty()) {
                     for(String condition : menu.getConditionsBQ(slot)) {
                         TextComponent cond = new TextComponent("  - "+ condition);
@@ -53,7 +58,12 @@ public class MenuInfo extends Command {
                         out.add(cond);
                     }
                 }
-                out.add(new TextComponent("§6BQ Events:"));
+                TextComponent eveLbl = new TextComponent("§6BQ Events: ");
+                TextComponent eveLblClk = new TextComponent("§2[§9Add§2]");
+                eveLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addevent " + menu.getMenuName() + " slot:" + slot + " event:"));
+                eveLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add event to slot: " + slot).create()));
+                eveLbl.addExtra(eveLblClk);
+                out.add(eveLbl);
                 if(menu.getEventsBQ(slot) != null && !menu.getEventsBQ(slot).isEmpty()) {
                     for(String event : menu.getEventsBQ(slot)) {
                         TextComponent eve = new TextComponent("  - "+ event);
@@ -63,7 +73,12 @@ public class MenuInfo extends Command {
                         out.add(eve);
                     }
                 }
-                out.add(new TextComponent("§6Commands:"));
+                TextComponent cmdLbl = new TextComponent("§6Commands: ");
+                TextComponent cmdLblClk = new TextComponent("§2[§9Add§2]");
+                cmdLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcommand " + menu.getMenuName() + " slot:" + slot + " command:"));
+                cmdLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add command to slot: " + slot).create()));
+                cmdLbl.addExtra(cmdLblClk);
+                out.add(cmdLbl);
                 if(menu.getCommands(slot) != null && !menu.getCommands(slot).isEmpty()) {
                     for(String command : menu.getCommands(slot)) {
                         TextComponent cmd = new TextComponent("  - "+ command);

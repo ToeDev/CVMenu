@@ -77,7 +77,8 @@ public class CVMenu extends JavaPlugin {
         commandParser.addCommand(new MenuRemoveEvent(this));
         commandParser.addCommand(new MenuAddCommand(this));
         commandParser.addCommand(new MenuRemoveCommand(this));
-        //commandParser.addCommand(new MenuDisplay());
+
+        commandParser.addCommand(new MenuDisplay(this));
 
         Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
         logger.info(ChatColor.LIGHT_PURPLE + "Plugin Enabled Successfully");

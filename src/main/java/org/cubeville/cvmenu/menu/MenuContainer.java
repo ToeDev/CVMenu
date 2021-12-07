@@ -7,6 +7,9 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pl.betoncraft.betonquest.BetonQuest;
+import pl.betoncraft.betonquest.exceptions.ObjectNotFoundException;
+import pl.betoncraft.betonquest.id.ConditionID;
 
 import java.util.*;
 
@@ -92,7 +95,7 @@ public class MenuContainer implements ConfigurationSerializable {
         return inventory.getSize();
     }
 
-    /*public void setMenuSize(int size) {
+    /*public void setMenuSize(int size) { //TODO...probably only increasing size???
         Inventory oldInv = inventory;
         inventory = Bukkit.cre
     }*/
@@ -105,11 +108,36 @@ public class MenuContainer implements ConfigurationSerializable {
         player.openInventory(inventory);
     }
 
+    public Inventory getDisplayInventory(Player player) {
+        Inventory displayInv = Bukkit.createInventory(null, getSize(), menuName + ChatColor.RESET + ChatColor.RESET);
+        for(int i = 0; i < getSize(); i++) {
+            if(getConditionsBQ(i) == null) {
+                displayInv.setItem(i, inventory.getItem(i));
+            } else if(playerHasAllConditionsBQ(i, player)) {
+                displayInv.setItem(i, inventory.getItem(i));
+            }
+        }
+        return displayInv;
+    }
+
     public String getSlotItem(int slot) {
         if(inventory.getItem(slot) != null) {
             return Objects.requireNonNull(inventory.getItem(slot)).getType().toString();
         }
         return "none";
+    }
+
+    public boolean playerHasAllConditionsBQ(int slot, Player player) {
+        for(String condition : getConditionsBQ(slot)) {
+            try {
+                if(!BetonQuest.condition(player.getUniqueId().toString(), new ConditionID(null, condition))) {
+                    return false;
+                }
+            } catch (ObjectNotFoundException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Set<String> getConditionsBQ(int slot) {

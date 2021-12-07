@@ -53,7 +53,7 @@ public class MenuInfo extends Command {
                     for(String condition : menu.getConditionsBQ(slot)) {
                         TextComponent cond = new TextComponent("  - "+ condition);
                         cond.setColor(ChatColor.BLUE);
-                        cond.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecondition " + condition));
+                        cond.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecondition condition:\"" + condition + "\""));
                         cond.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove condition: " + condition).create()));
                         out.add(cond);
                     }
@@ -68,7 +68,7 @@ public class MenuInfo extends Command {
                     for(String event : menu.getEventsBQ(slot)) {
                         TextComponent eve = new TextComponent("  - "+ event);
                         eve.setColor(ChatColor.BLUE);
-                        eve.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removeevent " + event));
+                        eve.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removeevent event:\"" + event + "\""));
                         eve.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove event: " + event).create()));
                         out.add(eve);
                     }
@@ -83,7 +83,7 @@ public class MenuInfo extends Command {
                     for(String command : menu.getCommands(slot)) {
                         TextComponent cmd = new TextComponent("  - "+ command);
                         cmd.setColor(ChatColor.BLUE);
-                        cmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecommand " + command));
+                        cmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecommand command:\"" + command + "\""));
                         cmd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove command: " + command).create()));
                         out.add(cmd);
                     }

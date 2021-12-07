@@ -10,7 +10,6 @@ import org.cubeville.commons.commands.CommandParser;
 import org.cubeville.cvmenu.commands.*;
 import org.cubeville.cvmenu.menu.MenuContainer;
 import org.cubeville.cvmenu.menu.MenuManager;
-import pl.betoncraft.betonquest.BetonQuest;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +22,6 @@ import java.util.logging.Logger;
 public class CVMenu extends JavaPlugin {
 
     private static CVMenu cvMenu;
-    private BetonQuest betonQuest;
 
     private MenuManager menuManager;
     private CommandParser commandParser;
@@ -32,7 +30,6 @@ public class CVMenu extends JavaPlugin {
     public void onEnable() {
         this.logger = getLogger();
         cvMenu = this;
-        betonQuest = BetonQuest.getInstance();
 
         final File dataDir = getDataFolder();
         if(!dataDir.exists()) {
@@ -86,10 +83,6 @@ public class CVMenu extends JavaPlugin {
 
     public static CVMenu getCvMenu() {
         return cvMenu;
-    }
-
-    public BetonQuest getBetonQuest() {
-        return this.betonQuest;
     }
 
     public MenuManager getMenuManager() {

@@ -28,13 +28,6 @@
         <scope>compile</scope>
     </dependency>
     <dependency>
-        <groupId>org.cubeville</groupId>
-        <artifactId>CVLoadouts</artifactId>
-        <version>0.2</version>
-        <type>jar</type>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
         <groupId>pl.betoncraft</groupId>
         <artifactId>betonquest</artifactId>
         <version>1.12.0</version>

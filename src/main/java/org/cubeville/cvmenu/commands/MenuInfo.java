@@ -53,7 +53,7 @@ public class MenuInfo extends Command {
                     for(String condition : menu.getConditionsBQ(slot)) {
                         TextComponent cond = new TextComponent("  - "+ condition);
                         cond.setColor(ChatColor.BLUE);
-                        cond.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecondition condition:\"" + condition + "\""));
+                        cond.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecondition " + menu.getMenuName() + " slot:" + slot + " condition:\"" + condition + "\""));
                         cond.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove condition: " + condition).create()));
                         out.add(cond);
                     }
@@ -68,7 +68,7 @@ public class MenuInfo extends Command {
                     for(String event : menu.getEventsBQ(slot)) {
                         TextComponent eve = new TextComponent("  - "+ event);
                         eve.setColor(ChatColor.BLUE);
-                        eve.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removeevent event:\"" + event + "\""));
+                        eve.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removeevent " + menu.getMenuName() + " slot:" + slot + " event:\"" + event + "\""));
                         eve.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove event: " + event).create()));
                         out.add(eve);
                     }
@@ -83,7 +83,7 @@ public class MenuInfo extends Command {
                     for(String command : menu.getCommands(slot)) {
                         TextComponent cmd = new TextComponent("  - "+ command);
                         cmd.setColor(ChatColor.BLUE);
-                        cmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecommand command:\"" + command + "\""));
+                        cmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removecommand " + menu.getMenuName() + " slot:" + slot + " command:\"" + command + "\""));
                         cmd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove command: " + command).create()));
                         out.add(cmd);
                     }
@@ -94,7 +94,7 @@ public class MenuInfo extends Command {
             out.add(new TextComponent("§6Menu Size: §9" + menu.getSize()));
             TextComponent condStatus = new TextComponent("§6Contains BQ Condition(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
-                if(menu.getConditionsBQ(i) != null) {
+                if(menu.getConditionsBQ(i) != null && menu.getConditionsBQ(i).size() >= 1) {
                     condStatus.addExtra("§9true");
                     break;
                 } else if(i == menu.getSize() - 1) {
@@ -104,7 +104,7 @@ public class MenuInfo extends Command {
             out.add(condStatus);
             TextComponent eveStatus = new TextComponent("§6Contains BQ Event(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
-                if(menu.getEventsBQ(i) != null) {
+                if(menu.getEventsBQ(i) != null && menu.getEventsBQ(i).size() >= 1) {
                     eveStatus.addExtra("§9true");
                     break;
                 } else if(i == menu.getSize() - 1) {
@@ -114,7 +114,7 @@ public class MenuInfo extends Command {
             out.add(eveStatus);
             TextComponent cmdStatus = new TextComponent("§6Contains Command(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
-                if(menu.getCommands(i) != null) {
+                if(menu.getCommands(i) != null && menu.getCommands(i).size() >= 1) {
                     cmdStatus.addExtra("§9true");
                     break;
                 } else if(i == menu.getSize() - 1) {

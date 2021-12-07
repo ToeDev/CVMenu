@@ -16,8 +16,8 @@ import java.util.*;
 @SerializableAs("MenuContainer")
 public class MenuContainer implements ConfigurationSerializable {
 
-    private String menuName;
-    private Inventory inventory;
+    private final String menuName;
+    private final Inventory inventory;
 
     private final Map<Integer, Set<String>> conditionsBQ;
     private final Map<Integer, Set<String>> eventsBQ;
@@ -84,12 +84,12 @@ public class MenuContainer implements ConfigurationSerializable {
         return menuName;
     }
 
-    public void setMenuName(String name) {
+    /*public void setMenuName(String name) { //TODO
         menuName = name;
         Inventory oldInv = inventory;
         inventory = Bukkit.createInventory(null, oldInv.getSize(), name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
         inventory.setContents(oldInv.getContents());
-    }
+    }*/
 
     public int getSize() {
         return inventory.getSize();
@@ -99,10 +99,6 @@ public class MenuContainer implements ConfigurationSerializable {
         Inventory oldInv = inventory;
         inventory = Bukkit.cre
     }*/
-
-    public Inventory getInventory() {
-        return inventory;
-    }
 
     public void editInventory(Player player) {
         player.openInventory(inventory);
@@ -134,7 +130,7 @@ public class MenuContainer implements ConfigurationSerializable {
                     return false;
                 }
             } catch (ObjectNotFoundException e) {
-                return false;
+                System.out.println(condition + "not a valid condition!");
             }
         }
         return true;

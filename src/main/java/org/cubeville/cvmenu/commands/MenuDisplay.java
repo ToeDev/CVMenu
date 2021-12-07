@@ -14,6 +14,7 @@ import org.cubeville.cvmenu.menu.MenuManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class MenuDisplay extends Command {
@@ -40,7 +41,7 @@ public class MenuDisplay extends Command {
             }
             Player p = Bukkit.getPlayer((String) parameters.get("player"));
             Inventory displayInv = menu.getDisplayInventory(p);
-            p.openInventory(displayInv);
+            Objects.requireNonNull(p).openInventory(displayInv);
             return new CommandResponse("");
         }
         Inventory displayInv = menu.getDisplayInventory(player);

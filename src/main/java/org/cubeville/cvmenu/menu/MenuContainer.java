@@ -159,11 +159,21 @@ public class MenuContainer implements ConfigurationSerializable {
     }
 
     public void addEventBQ(int slot, String event) {
-        eventsBQ.get(slot).add(event.toLowerCase());
+        if(eventsBQ.get(slot) == null) {
+            Set<String> events = new HashSet<>();
+            events.add(event);
+            eventsBQ.put(slot, events);
+        } else {
+            eventsBQ.get(slot).add(event.toLowerCase());
+        }
     }
 
     public void removeEventBQ(int slot, String event) {
         eventsBQ.get(slot).remove(event.toLowerCase());
+    }
+
+    public void removeAllEventsBQ(int slot) {
+        eventsBQ.remove(slot);
     }
 
     public Set<String> getCommands(int slot) {
@@ -181,13 +191,21 @@ public class MenuContainer implements ConfigurationSerializable {
     }
 
     public void addCommand(int slot, String command) {
-        commands.get(slot).add(command.toLowerCase());
+        if(commands.get(slot) == null) {
+            Set<String> cmds = new HashSet<>();
+            cmds.add(command);
+            commands.put(slot, cmds);
+        } else {
+            commands.get(slot).add(command.toLowerCase());
+        }
     }
 
     public void removeCommand(int slot, String command) {
         commands.get(slot).remove(command.toLowerCase());
     }
 
-
+    public void removeAllCommands(int slot) {
+        commands.remove(slot);
+    }
 
 }

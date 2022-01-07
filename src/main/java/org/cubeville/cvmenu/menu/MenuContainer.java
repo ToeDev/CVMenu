@@ -25,7 +25,6 @@ public class MenuContainer implements ConfigurationSerializable {
 
     @SuppressWarnings("unchecked")
     public MenuContainer(Map<String, Object> config) {
-        System.out.println(config.get("name") + " loaded from config");
         menuName = (String) config.get("name");
         conditionsBQ = new HashMap<>();
         eventsBQ = new HashMap<>();

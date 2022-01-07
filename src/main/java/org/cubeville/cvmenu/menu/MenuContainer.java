@@ -1,5 +1,8 @@
 package org.cubeville.cvmenu.menu;
 
+import org.betonquest.betonquest.BetonQuest;
+import org.betonquest.betonquest.exceptions.ObjectNotFoundException;
+import org.betonquest.betonquest.id.ConditionID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -7,9 +10,6 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import pl.betoncraft.betonquest.BetonQuest;
-import pl.betoncraft.betonquest.exceptions.ObjectNotFoundException;
-import pl.betoncraft.betonquest.id.ConditionID;
 
 import java.util.*;
 

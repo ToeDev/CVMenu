@@ -1,5 +1,8 @@
 package org.cubeville.cvmenu;
 
+import org.betonquest.betonquest.BetonQuest;
+import org.betonquest.betonquest.exceptions.ObjectNotFoundException;
+import org.betonquest.betonquest.id.EventID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,9 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.cubeville.cvmenu.menu.MenuContainer;
-import pl.betoncraft.betonquest.BetonQuest;
-import pl.betoncraft.betonquest.exceptions.ObjectNotFoundException;
-import pl.betoncraft.betonquest.id.EventID;
 
 public class MenuListener implements Listener {
 

@@ -41,10 +41,10 @@ public class MenuInfo extends Command {
                 throw new CommandExecutionException(org.bukkit.ChatColor.RED + "Menu " + org.bukkit.ChatColor.GOLD + baseParameters.get(0) + org.bukkit.ChatColor.RED + " only contains " + ChatColor.GOLD + menu.getSize() + ChatColor.RED + " slots! Remember, the first slot is slot 0!");
             } else {
                 int slot = (int) parameters.get("slot");
-                out.add(new TextComponent("§2--------------------§a" + menu.getMenuName() + ":" + slot + "§2--------------------"));
-                out.add(new TextComponent("§6Item: §9" + menu.getSlotItem(slot)));
-                TextComponent condLbl = new TextComponent("§6BQ Conditions: ");
-                TextComponent condLblClk = new TextComponent("§2[§9Add§2]");
+                out.add(new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "--------------------" + org.bukkit.ChatColor.GREEN + menu.getMenuName() + ":" + slot + org.bukkit.ChatColor.DARK_GREEN + "--------------------"));
+                out.add(new TextComponent(org.bukkit.ChatColor.GOLD + "Item: " + org.bukkit.ChatColor.BLUE + menu.getSlotItem(slot)));
+                TextComponent condLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "BQ Conditions: ");
+                TextComponent condLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
                 condLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcondition " + menu.getMenuName() + " slot:" + slot + " condition:"));
                 condLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add condition to slot: " + slot).create()));
                 condLbl.addExtra(condLblClk);
@@ -58,8 +58,8 @@ public class MenuInfo extends Command {
                         out.add(cond);
                     }
                 }
-                TextComponent eveLbl = new TextComponent("§6BQ Events: ");
-                TextComponent eveLblClk = new TextComponent("§2[§9Add§2]");
+                TextComponent eveLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "BQ Events: ");
+                TextComponent eveLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
                 eveLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addevent " + menu.getMenuName() + " slot:" + slot + " event:"));
                 eveLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add event to slot: " + slot).create()));
                 eveLbl.addExtra(eveLblClk);
@@ -73,8 +73,8 @@ public class MenuInfo extends Command {
                         out.add(eve);
                     }
                 }
-                TextComponent cmdLbl = new TextComponent("§6Commands: ");
-                TextComponent cmdLblClk = new TextComponent("§2[§9Add§2]");
+                TextComponent cmdLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "Commands: ");
+                TextComponent cmdLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
                 cmdLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcommand " + menu.getMenuName() + " slot:" + slot + " command:"));
                 cmdLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add command to slot: " + slot).create()));
                 cmdLbl.addExtra(cmdLblClk);
@@ -90,35 +90,35 @@ public class MenuInfo extends Command {
                 }
             }
         } else {
-            out.add(new TextComponent("§2--------------------§a" + menu.getMenuName() + "§2--------------------"));
-            out.add(new TextComponent("§6Menu Size: §9" + menu.getSize()));
-            TextComponent condStatus = new TextComponent("§6Contains BQ Condition(s): ");
+            out.add(new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "--------------------" + org.bukkit.ChatColor.GREEN + menu.getMenuName() + org.bukkit.ChatColor.DARK_GREEN + "--------------------"));
+            out.add(new TextComponent(org.bukkit.ChatColor.GOLD + "Menu Size: " + org.bukkit.ChatColor.BLUE + menu.getSize()));
+            TextComponent condStatus = new TextComponent(org.bukkit.ChatColor.GOLD + "Contains BQ Condition(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
                 if(menu.getConditionsBQ(i) != null && menu.getConditionsBQ(i).size() >= 1) {
-                    condStatus.addExtra("§9true");
+                    condStatus.addExtra(org.bukkit.ChatColor.BLUE + "true");
                     break;
                 } else if(i == menu.getSize() - 1) {
-                    condStatus.addExtra("§9false");
+                    condStatus.addExtra(org.bukkit.ChatColor.BLUE + "false");
                 }
             }
             out.add(condStatus);
-            TextComponent eveStatus = new TextComponent("§6Contains BQ Event(s): ");
+            TextComponent eveStatus = new TextComponent(org.bukkit.ChatColor.GOLD + "Contains BQ Event(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
                 if(menu.getEventsBQ(i) != null && menu.getEventsBQ(i).size() >= 1) {
-                    eveStatus.addExtra("§9true");
+                    eveStatus.addExtra(org.bukkit.ChatColor.BLUE + "true");
                     break;
                 } else if(i == menu.getSize() - 1) {
-                    eveStatus.addExtra("§9false");
+                    eveStatus.addExtra(org.bukkit.ChatColor.BLUE + "false");
                 }
             }
             out.add(eveStatus);
-            TextComponent cmdStatus = new TextComponent("§6Contains Command(s): ");
+            TextComponent cmdStatus = new TextComponent(org.bukkit.ChatColor.GOLD + "Contains Command(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
                 if(menu.getCommands(i) != null && menu.getCommands(i).size() >= 1) {
-                    cmdStatus.addExtra("§9true");
+                    cmdStatus.addExtra(org.bukkit.ChatColor.BLUE + "true");
                     break;
                 } else if(i == menu.getSize() - 1) {
-                    cmdStatus.addExtra("§9false");
+                    cmdStatus.addExtra(org.bukkit.ChatColor.BLUE + "false");
                 }
             }
             out.add(cmdStatus);

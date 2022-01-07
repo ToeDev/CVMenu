@@ -29,7 +29,7 @@ public class MenuList extends Command {
     public CommandResponse execute(Player player, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) {
         List<String> menus = plugin.getMenuManager().getAllMenuNames();
         List<TextComponent> out = new ArrayList<>();
-        out.add(new TextComponent("§2--------------------§aMenus§2--------------------"));
+        out.add(new TextComponent(ChatColor.DARK_GREEN + "--------------------" + ChatColor.GREEN + "Menus" + ChatColor.DARK_GREEN + "--------------------"));
         TextComponent menuList = new TextComponent("");
         int i = menus.size();
         for (String menu : menus) {
@@ -38,7 +38,7 @@ public class MenuList extends Command {
             m.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu edit " + menu));
             m.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Edit " + menu).create()));
             i--;
-            if (i >= 1) m.addExtra("§9||");
+            if (i >= 1) m.addExtra(ChatColor.BLUE + "||");
             menuList.addExtra(m);
         }
         out.add(menuList);

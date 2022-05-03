@@ -30,7 +30,7 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if(event.getView().getTitle().length() > 4 && event.getView().getTitle().endsWith("§r§r")) {
+        if(event.getView().getTitle().length() > 4 && event.getView().getTitle().endsWith(ChatColor.RESET.toString() + ChatColor.RESET.toString())) {
             event.setCancelled(true);
             if(event.getClickedInventory() == null) return;
             if(event.getSlot() == -999) return;

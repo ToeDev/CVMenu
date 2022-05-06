@@ -27,10 +27,10 @@ public class MenuAddCommand extends Command {
     @Override
     public CommandResponse execute(Player player, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
         MenuManager manager = plugin.getMenuManager();
-        if(manager.getMenu((String) baseParameters.get(0)) == null) {
+        if(manager.getMenu(((String) baseParameters.get(0)).toLowerCase()) == null) {
             throw new CommandExecutionException(ChatColor.RED + "Menu " + ChatColor.GOLD + baseParameters.get(0) + ChatColor.RED + " doesn't exist!");
         }
-        MenuContainer menu = manager.getMenu((String) baseParameters.get(0));
+        MenuContainer menu = manager.getMenu(((String) baseParameters.get(0)).toLowerCase());
         int slot = -1;
         if(parameters.containsKey("slot")) {
             slot = (int) parameters.get("slot");

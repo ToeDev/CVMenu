@@ -34,7 +34,7 @@ public class MenuCreate extends Command {
             size = (int) parameters.get("size");
         }
 
-        if(!manager.menuExists((String) baseParameters.get(0))) {
+        if(!manager.menuExists(((String) baseParameters.get(0)).toLowerCase())) {
             manager.createMenu(player, (String) baseParameters.get(0), size);
             return new CommandResponse(ChatColor.GREEN + "Menu " + ChatColor.GOLD + baseParameters.get(0) + ChatColor.GREEN + " created!");
         } else {

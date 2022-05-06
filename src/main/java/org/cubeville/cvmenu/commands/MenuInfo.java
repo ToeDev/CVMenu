@@ -31,10 +31,10 @@ public class MenuInfo extends Command {
     @Override
     public CommandResponse execute(Player player, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
         MenuManager manager = plugin.getMenuManager();
-        if(manager.getMenu((String) baseParameters.get(0)) == null) {
+        if(manager.getMenu(((String) baseParameters.get(0)).toLowerCase()) == null) {
             throw new CommandExecutionException(org.bukkit.ChatColor.RED + "Menu " + org.bukkit.ChatColor.GOLD + baseParameters.get(0) + org.bukkit.ChatColor.RED + " doesn't exist!");
         }
-        MenuContainer menu = manager.getMenu((String) baseParameters.get(0));
+        MenuContainer menu = manager.getMenu(((String) baseParameters.get(0)).toLowerCase());
         List<TextComponent> out = new ArrayList<>();
         if(parameters.containsKey("slot")) {
             if((int) parameters.get("slot") + 1 > menu.getSize() || (int) parameters.get("slot") < 0) {
@@ -43,6 +43,12 @@ public class MenuInfo extends Command {
                 int slot = (int) parameters.get("slot");
                 out.add(new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "--------------------" + org.bukkit.ChatColor.GREEN + menu.getMenuName() + ":" + slot + org.bukkit.ChatColor.DARK_GREEN + "--------------------"));
                 out.add(new TextComponent(org.bukkit.ChatColor.GOLD + "Item: " + org.bukkit.ChatColor.BLUE + menu.getSlotItem(slot)));
+                TextComponent closeLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "Will Close: " + org.bukkit.ChatColor.BLUE + menu.doesClose(slot) + " ");
+                TextComponent closeLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Set" + org.bukkit.ChatColor.DARK_GREEN + "]");
+                closeLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu setclose " + menu.getMenuName() + " slot:" + slot + " "));
+                closeLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Set whether the menu will close when clicking slot: " + slot).create()));
+                closeLbl.addExtra(closeLblClk);
+                out.add(closeLbl);
                 TextComponent condLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "BQ Conditions: ");
                 TextComponent condLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
                 condLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcondition " + menu.getMenuName() + " slot:" + slot + " condition:"));

@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MenuAddCondition extends Command {
+public class MenuSetClose extends Command {
 
     private final CVMenu plugin;
 
-    public MenuAddCondition(CVMenu plugin) {
-        super("addcondition");
+    public MenuSetClose(CVMenu plugin) {
+        super("setclose");
         addBaseParameter(new CommandParameterString(CommandParameterString.NO_SPECIAL_CHARACTERS));
         addParameter("slot", true, new CommandParameterInteger());
-        addParameter("condition", false, new CommandParameterString());
+        addBaseParameter(new CommandParameterBoolean());
 
         this.plugin = plugin;
     }
@@ -38,21 +38,16 @@ public class MenuAddCondition extends Command {
                 throw new CommandExecutionException(ChatColor.RED + "Slot: " + ChatColor.GOLD + slot + ChatColor.RED + " doesn't exist on menu " + ChatColor.GOLD + menu.getMenuName() + ChatColor.LIGHT_PURPLE + " Remember, the first slot is slot 0! Remove the slot parameter or use slot:-1 for adding to all slots.");
             }
         }
-        String condition = (String) parameters.get("condition");
+        Boolean status = (Boolean) baseParameters.get(1);
         if(slot == -1) {
             for(int i = 0; i < menu.getSize(); i++) {
-                if(!menu.containsConditionBQ(i, condition.toLowerCase())) {
-                    menu.addConditionBQ(i, condition.toLowerCase());
-                }
+                menu.setClose(i, status);
             }
             plugin.saveMenuManager();
-            return new CommandResponse(ChatColor.LIGHT_PURPLE + "Condition: " + ChatColor.GOLD + condition + ChatColor.LIGHT_PURPLE + " set on slots: " + ChatColor.GOLD + 0 + " - " + (menu.getSize() - 1) + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
+            return new CommandResponse(ChatColor.LIGHT_PURPLE + "Menu will close when clicking any slots");
         }
-        if(menu.containsConditionBQ(slot, condition.toLowerCase())) {
-            throw new CommandExecutionException(ChatColor.RED + "Slot: " + ChatColor.GOLD + slot + ChatColor.RED + " already has condition: " + ChatColor.GOLD + condition + ChatColor.RED + " set on menu " + ChatColor.GOLD + menu.getMenuName());
-        }
-        menu.addConditionBQ(slot, condition.toLowerCase());
+        menu.setClose(slot, status);
         plugin.saveMenuManager();
-        return new CommandResponse(ChatColor.LIGHT_PURPLE + "Condition: " + ChatColor.GOLD + condition + ChatColor.LIGHT_PURPLE + " set on slot: " + ChatColor.GOLD + slot + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
+        return new CommandResponse(ChatColor.LIGHT_PURPLE + "Menu closing changed to: " + ChatColor.GOLD + status + ChatColor.LIGHT_PURPLE + " on slot: " + ChatColor.GOLD + slot + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
     }
 }

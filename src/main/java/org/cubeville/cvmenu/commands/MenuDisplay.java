@@ -31,10 +31,10 @@ public class MenuDisplay extends BaseCommand {
 
     public CommandResponse execute(CommandSender sender, Set<String> flags, Map<String, Object> parameters, List<Object> baseParameters) throws CommandExecutionException {
         MenuManager manager = plugin.getMenuManager();
-        if(!manager.menuExists((String) baseParameters.get(0))) {
+        if(!manager.menuExists(((String) baseParameters.get(0)).toLowerCase())) {
             throw new CommandExecutionException(ChatColor.RED + "Menu " + ChatColor.GOLD + baseParameters.get(0) + ChatColor.RED + " doesn't exist!");
         }
-        MenuContainer menu = manager.getMenu((String) baseParameters.get(0));
+        MenuContainer menu = manager.getMenu(((String) baseParameters.get(0)).toLowerCase());
         if(parameters.containsKey("player")) {
             if(Bukkit.getPlayer((String) parameters.get("player")) == null) {
                 throw new CommandExecutionException(ChatColor.GOLD + (String) parameters.get("player") + ChatColor.RED + " is not online!");

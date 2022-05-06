@@ -23,12 +23,15 @@ public class MenuContainer implements ConfigurationSerializable {
     private final Map<Integer, Set<String>> eventsBQ;
     private final Map<Integer, Set<String>> commands;
 
+    private final Map<Integer, Boolean> slotCloses;
+
     @SuppressWarnings("unchecked")
     public MenuContainer(Map<String, Object> config) {
         menuName = (String) config.get("name");
         conditionsBQ = new HashMap<>();
         eventsBQ = new HashMap<>();
         commands = new HashMap<>();
+        slotCloses = new HashMap<>();
         inventory = Bukkit.createInventory(null, config.size() - 2, (String) config.get("name") + ChatColor.RESET);
         for(int i = 0; i < config.size() - 2; i++) {
             Map<String, Object> slot = (Map<String, Object>) config.get("Slot" + i);
@@ -43,6 +46,10 @@ public class MenuContainer implements ConfigurationSerializable {
             if(slot.get("commands") != null) {
                 Set<String> cmds = new HashSet<>((Collection<? extends String>) slot.get("commands"));
                 commands.put(i, cmds);
+            }
+            if(slot.get("closes") != null) {
+                Boolean closes = (Boolean) slot.get("closes");
+                slotCloses.put(i, closes);
             }
             inventory.setItem(i, (ItemStack) slot.get("item"));
         }
@@ -63,6 +70,9 @@ public class MenuContainer implements ConfigurationSerializable {
             List<String> cmdList = new ArrayList<>();
             if(commands.get(i) != null && !commands.get(i).isEmpty()) cmdList.addAll(commands.get(i));
             out.put("commands", cmdList);
+            Boolean closes = null;
+            if(slotCloses.get(i) != null) closes = slotCloses.get(i);
+            out.put("closes", closes);
             out.put("item", inventory.getItem(i));
 
             ret.put("Slot" + i, out);
@@ -76,6 +86,7 @@ public class MenuContainer implements ConfigurationSerializable {
         conditionsBQ = new HashMap<>();
         eventsBQ = new HashMap<>();
         commands = new HashMap<>();
+        slotCloses = new HashMap<>();
         player.openInventory(inventory);
     }
 
@@ -229,6 +240,17 @@ public class MenuContainer implements ConfigurationSerializable {
 
     public void removeAllCommands(int slot) {
         commands.remove(slot);
+    }
+
+    public boolean doesClose(int slot) {
+        if(slotCloses.get(slot) == null) {
+            return false;
+        }
+        return slotCloses.get(slot);
+    }
+
+    public void setClose(int slot, boolean status) {
+        slotCloses.put(slot, status);
     }
 
 }

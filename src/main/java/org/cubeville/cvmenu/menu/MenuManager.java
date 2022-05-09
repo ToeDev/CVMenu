@@ -39,7 +39,7 @@ public class MenuManager implements ConfigurationSerializable {
     }
 
     public void removeMenu(String name) {
-        menus.remove(name);
+        menus.remove(name.toLowerCase());
     }
 
     public void editMenu(Player player, String name) {
@@ -52,7 +52,7 @@ public class MenuManager implements ConfigurationSerializable {
 
     public MenuContainer getMenu(String menu) {
         if(menuExists(menu)) {
-            return menus.get(menu);
+            return menus.get(menu.toLowerCase());
         }
         return null;
     }

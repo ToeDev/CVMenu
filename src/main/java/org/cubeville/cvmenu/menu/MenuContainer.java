@@ -1,8 +1,8 @@
 package org.cubeville.cvmenu.menu;
 
-import org.betonquest.betonquest.BetonQuest;
+/*import org.betonquest.betonquest.BetonQuest;
 import org.betonquest.betonquest.exceptions.ObjectNotFoundException;
-import org.betonquest.betonquest.id.ConditionID;
+import org.betonquest.betonquest.id.ConditionID;*/
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -10,6 +10,9 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pl.betoncraft.betonquest.BetonQuest;
+import pl.betoncraft.betonquest.exceptions.ObjectNotFoundException;
+import pl.betoncraft.betonquest.id.ConditionID;
 
 import java.util.*;
 
@@ -90,6 +93,16 @@ public class MenuContainer implements ConfigurationSerializable {
         player.openInventory(inventory);
     }
 
+    //API USAGE ONLY
+    public MenuContainer(String name, int size) {
+        menuName = name;
+        inventory = Bukkit.createInventory(null, size, name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
+        conditionsBQ = new HashMap<>();
+        eventsBQ = new HashMap<>();
+        commands = new HashMap<>();
+        slotCloses = new HashMap<>();
+    }
+
     public String getMenuName() {
         return menuName;
     }
@@ -109,6 +122,11 @@ public class MenuContainer implements ConfigurationSerializable {
         Inventory oldInv = inventory;
         inventory = Bukkit.cre
     }*/
+
+    //API USAGE ONLY
+    public Inventory getInventory() {
+        return inventory;
+    }
 
     public void editInventory(Player player) {
         player.openInventory(inventory);

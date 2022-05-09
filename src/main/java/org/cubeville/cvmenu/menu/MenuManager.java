@@ -33,6 +33,11 @@ public class MenuManager implements ConfigurationSerializable {
         menus.put(name.toLowerCase(), new MenuContainer(player, name, size));
     }
 
+    //API USAGE ONLY
+    public void createMenu(String name, int size) {
+        menus.put(name.toLowerCase(), new MenuContainer(name, size));
+    }
+
     public void removeMenu(String name) {
         menus.remove(name);
     }

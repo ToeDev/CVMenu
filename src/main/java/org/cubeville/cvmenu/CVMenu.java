@@ -92,6 +92,7 @@ public class CVMenu extends JavaPlugin {
     }
 
     public void saveMenuManager() {
+        this.menuManager.removeTempMenus();
         getConfig().set("MenuManager", menuManager);
         saveConfig();
     }

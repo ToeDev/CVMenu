@@ -3,6 +3,8 @@ package org.cubeville.cvmenu.menu;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.cubeville.cvmenu.CVMenu;
 
 import java.util.*;
@@ -34,8 +36,31 @@ public class MenuManager implements ConfigurationSerializable {
     }
 
     //API USAGE ONLY
+    public void createTempMenu(String name, int size, Player owner) {
+        menus.put(owner.getName().toLowerCase() + "'s_" + name.toLowerCase(), new MenuContainer(name, size, owner));
+    }
+
+    //API USAGE ONLY
+    public MenuContainer getTempMenu(String menu, Player owner) {
+        if(menuExists(owner.getName() + "'s_" + menu)) {
+            return menus.get(owner.getName().toLowerCase() + "'s_" + menu.toLowerCase());
+        }
+        return null;
+    }
+
+    //API USAGE ONLY
     public void createMenu(String name, int size) {
         menus.put(name.toLowerCase(), new MenuContainer(name, size));
+    }
+
+    //API USAGE ONLY
+    public void setMenuInv(String name, Inventory newInventory) {
+        menus.get(name.toLowerCase()).setInventory(newInventory);
+    }
+
+    //API USAGE ONLY
+    public void setMenuItem(String name, int slot, ItemStack item) {
+        menus.get(name.toLowerCase()).setItem(slot, item);
     }
 
     public void removeMenu(String name) {
@@ -60,7 +85,9 @@ public class MenuManager implements ConfigurationSerializable {
     public List<String> getAllMenuNames() {
         List<String> menuList = new ArrayList<>();
         for(MenuContainer menu : menus.values()) {
-            menuList.add(menu.getMenuName());
+            if(menu.getInventory().getHolder() == null) {
+                menuList.add(menu.getMenuName());
+            }
         }
         Collections.sort(menuList);
         return menuList;
@@ -68,5 +95,13 @@ public class MenuManager implements ConfigurationSerializable {
 
     public void setManager(CVMenu plugin) {
         this.plugin = plugin;
+    }
+
+    public void removeTempMenus() {
+        for(MenuContainer menu : menus.values()) {
+            if(menu.getInventory().getHolder() != null) {
+                menus.values().remove(menu);
+            }
+        }
     }
 }

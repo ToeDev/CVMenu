@@ -39,8 +39,11 @@ public class MenuListener implements Listener {
             if(event.getSlot() == -999) return;
             if(event.getClickedInventory().getItem(event.getSlot()) == null) return;
             MenuContainer menu = plugin.getMenuManager().getMenu(event.getView().getTitle().substring(0, event.getView().getTitle().length() - 4).toLowerCase());
-            if(menu == null) return;
             Player player = (Player) event.getWhoClicked();
+            if(menu == null) {
+                menu = plugin.getMenuManager().getMenu(player.getName() + "'s_" + event.getView().getTitle().substring(0, event.getView().getTitle().length() - 4).toLowerCase());
+            }
+            if(menu == null) return;
             if(menu.getCommands(event.getRawSlot()) != null) {
                 for(String command : menu.getCommands(event.getSlot())) {
                     if(command.contains("%player%")) {

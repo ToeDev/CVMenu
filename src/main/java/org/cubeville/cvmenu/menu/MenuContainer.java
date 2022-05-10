@@ -20,7 +20,7 @@ import java.util.*;
 public class MenuContainer implements ConfigurationSerializable {
 
     private final String menuName;
-    private final Inventory inventory;
+    private Inventory inventory;
 
     private final Map<Integer, Set<String>> conditionsBQ;
     private final Map<Integer, Set<String>> eventsBQ;
@@ -103,6 +103,16 @@ public class MenuContainer implements ConfigurationSerializable {
         slotCloses = new HashMap<>();
     }
 
+    //API USAGE ONLY
+    public MenuContainer(String name, int size, Player owner) {
+        menuName = name;
+        inventory = Bukkit.createInventory(owner, size, name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
+        conditionsBQ = new HashMap<>();
+        eventsBQ = new HashMap<>();
+        commands = new HashMap<>();
+        slotCloses = new HashMap<>();
+    }
+
     public String getMenuName() {
         return menuName;
     }
@@ -126,6 +136,16 @@ public class MenuContainer implements ConfigurationSerializable {
     //API USAGE ONLY
     public Inventory getInventory() {
         return inventory;
+    }
+
+    //API USAGE ONLY
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    //API USAGE ONLY
+    public void setItem(int slot, ItemStack item) {
+        inventory.setItem(slot, item);
     }
 
     public void editInventory(Player player) {

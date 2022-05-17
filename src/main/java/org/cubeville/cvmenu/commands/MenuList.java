@@ -38,7 +38,7 @@ public class MenuList extends BaseCommand {
                 m.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu edit " + menu));
                 m.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Edit " + menu).create()));
                 i--;
-                if(i >= 1) m.addExtra(ChatColor.BLUE + "||");
+                if(i >= 1) m.addExtra(ChatColor.BLUE + " || ");
                 menuList.addExtra(m);
             }
             out.add(menuList);
@@ -52,7 +52,7 @@ public class MenuList extends BaseCommand {
             int i = menus.size();
             for(String menu : menus) {
                 i--;
-                if(i >= 1) menu = menu.concat(ChatColor.BLUE + "||");
+                if(i >= 1) menu = menu.concat(ChatColor.BLUE + " || ");
                 list = list.concat(ChatColor.GOLD + menu);
             }
             out.add(list);

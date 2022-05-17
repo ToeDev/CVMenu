@@ -76,6 +76,7 @@ public class CVMenu extends JavaPlugin {
         commandParser.addCommand(new MenuRemoveCommand(this));
 
         commandParser.addCommand(new MenuSetClose(this));
+        commandParser.addCommand(new MenuRunCmdsFromPlayer(this));
 
         commandParser.addCommand(new MenuDisplay(this));
 

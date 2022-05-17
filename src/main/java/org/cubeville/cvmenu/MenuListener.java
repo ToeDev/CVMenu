@@ -47,9 +47,17 @@ public class MenuListener implements Listener {
             if(menu.getCommands(event.getRawSlot()) != null) {
                 for(String command : menu.getCommands(event.getSlot())) {
                     if(command.contains("%player%")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                        if(menu.doCmdsRunFromConsole(event.getSlot())) {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                        } else {
+                            Bukkit.dispatchCommand(player, command.replace("%player%", player.getName()));
+                        }
                     } else {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        if(menu.doCmdsRunFromConsole(event.getSlot())) {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        } else {
+                            Bukkit.dispatchCommand(player, command);
+                        }
                     }
                 }
             }

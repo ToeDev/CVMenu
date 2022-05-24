@@ -22,9 +22,13 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if(plugin.getMenuManager().menuExists(event.getView().getTitle().substring(0, event.getView().getTitle().length() - 2))) { //Substring needed to allow cvloadouts and cvmenus to have duplicate inventory titles
-            plugin.saveMenuManager();
-            event.getPlayer().sendMessage(ChatColor.GREEN + "Menu " + ChatColor.GOLD + event.getView().getTitle() + ChatColor.GREEN + " saved!");
+        try {
+            if (plugin.getMenuManager().menuExists(event.getView().getTitle().substring(0, event.getView().getTitle().length() - 2))) { //Substring needed to allow cvloadouts and cvmenus to have duplicate inventory titles
+                plugin.saveMenuManager();
+                event.getPlayer().sendMessage(ChatColor.GREEN + "Menu " + ChatColor.GOLD + event.getView().getTitle() + ChatColor.GREEN + " saved!");
+            }
+        } catch(IndexOutOfBoundsException ignored) {
+
         }
     }
 

@@ -3,6 +3,7 @@ package org.cubeville.cvmenu.menu;
 import org.betonquest.betonquest.BetonQuest;
 import org.betonquest.betonquest.exceptions.ObjectNotFoundException;
 import org.betonquest.betonquest.id.ConditionID;
+import org.betonquest.betonquest.utils.PlayerConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -183,7 +184,7 @@ public class MenuContainer implements ConfigurationSerializable {
     public boolean playerHasAllConditionsBQ(int slot, Player player) {
         for(String condition : getConditionsBQ(slot)) {
             try {
-                if(!BetonQuest.condition(player.getUniqueId().toString(), new ConditionID(null, condition))) {
+                if(!BetonQuest.condition(PlayerConverter.getID(player), new ConditionID(null, condition))) {
                     return false;
                 }
             } catch (ObjectNotFoundException e) {

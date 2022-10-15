@@ -3,6 +3,7 @@ package org.cubeville.cvmenu;
 import org.betonquest.betonquest.BetonQuest;
 import org.betonquest.betonquest.exceptions.ObjectNotFoundException;
 import org.betonquest.betonquest.id.EventID;
+import org.betonquest.betonquest.utils.PlayerConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -65,7 +66,7 @@ public class MenuListener implements Listener {
             if(menu.getEventsBQ(event.getRawSlot()) != null) {
                 for(String eventBQ : menu.getEventsBQ(event.getSlot())) {
                     try {
-                        BetonQuest.event(player.getUniqueId().toString(), new EventID(null, eventBQ));
+                        BetonQuest.event(PlayerConverter.getID(player), new EventID(null, eventBQ));
                     } catch (ObjectNotFoundException e) {
                         System.out.println(eventBQ + "not a valid event!");
                     }

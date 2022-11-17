@@ -6,7 +6,7 @@
 
     <groupId>org.cubeville</groupId>
     <artifactId>CVMenu</artifactId>
-    <version>0.1</version>
+    <version>1.18</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -23,7 +23,7 @@
     <dependency>
         <groupId>org.cubeville</groupId>
         <artifactId>CVTools</artifactId>
-        <version>0.5</version>
+        <version>1.18</version>
         <type>jar</type>
         <scope>compile</scope>
     </dependency>

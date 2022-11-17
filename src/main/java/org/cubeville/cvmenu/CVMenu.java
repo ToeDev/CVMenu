@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,6 +105,14 @@ public class CVMenu extends JavaPlugin {
             return commandParser.execute(sender, args);
         }
         return false;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> out = commandParser.getCompletions(sender, args);
+        if(out == null) {
+            return new ArrayList<>(menuManager.getAllMenuNames());
+        }
+        return out;
     }
 
     public void onDisable() {

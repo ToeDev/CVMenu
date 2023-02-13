@@ -41,17 +41,17 @@ public class MenuAddCommand extends Command {
         String command = (String) parameters.get("command");
         if(slot == -1) {
             for(int i = 0; i < menu.getSize(); i++) {
-                if(!menu.containsCommand(i, command.toLowerCase())) {
-                    menu.addCommand(i, command.toLowerCase());
+                if(!menu.containsCommand(i, command)) {
+                    menu.addCommand(i, command);
                 }
             }
             plugin.saveMenuManager();
             return new CommandResponse(ChatColor.LIGHT_PURPLE + "Command: " + ChatColor.GOLD + command + ChatColor.LIGHT_PURPLE + " set on slots: " + ChatColor.GOLD + 0 + " - " + (menu.getSize() - 1) + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
         }
-        if(menu.containsCommand(slot, command.toLowerCase())) {
+        if(menu.containsCommand(slot, command)) {
             throw new CommandExecutionException(ChatColor.RED + "Slot: " + ChatColor.GOLD + slot + ChatColor.RED + " already has command: " + ChatColor.GOLD + command + ChatColor.RED + " set on menu " + ChatColor.GOLD + menu.getMenuName());
         }
-        menu.addCommand(slot, command.toLowerCase());
+        menu.addCommand(slot, command);
         plugin.saveMenuManager();
         return new CommandResponse(ChatColor.LIGHT_PURPLE + "Command: " + ChatColor.GOLD + command + ChatColor.LIGHT_PURPLE + " set on slot: " + ChatColor.GOLD + slot + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
     }

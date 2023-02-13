@@ -269,7 +269,7 @@ public class MenuContainer implements ConfigurationSerializable {
         if(commands.get(slot) == null) {
             return false;
         }
-        return commands.get(slot).contains(command.toLowerCase());
+        return commands.get(slot).contains(command);
     }
 
     public void addCommand(int slot, String command) {
@@ -278,12 +278,12 @@ public class MenuContainer implements ConfigurationSerializable {
             cmds.add(command);
             commands.put(slot, cmds);
         } else {
-            commands.get(slot).add(command.toLowerCase());
+            commands.get(slot).add(command);
         }
     }
 
     public void removeCommand(int slot, String command) {
-        commands.get(slot).remove(command.toLowerCase());
+        commands.get(slot).remove(command);
     }
 
     public void removeAllCommands(int slot) {

@@ -45,8 +45,8 @@ public class MenuRemoveCommand extends Command {
         if(slot == -1) {
             for(int i = 0; i < menu.getSize(); i++) {
                 if(command.equals("-1")) menu.removeAllCommands(i);
-                if(menu.containsCommand(i, command.toLowerCase())) {
-                    menu.removeCommand(i, command.toLowerCase());
+                if(menu.containsCommand(i, command)) {
+                    menu.removeCommand(i, command);
                 }
             }
             plugin.saveMenuManager();
@@ -57,10 +57,10 @@ public class MenuRemoveCommand extends Command {
             plugin.saveMenuManager();
             return new CommandResponse(ChatColor.LIGHT_PURPLE + "All commands removed on slot: " + ChatColor.GOLD + slot + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
         }
-        if(!menu.containsCommand(slot, command.toLowerCase())) {
+        if(!menu.containsCommand(slot, command)) {
             throw new CommandExecutionException(ChatColor.RED + "Slot: " + ChatColor.GOLD + slot + ChatColor.RED + " doesn't have command: " + ChatColor.GOLD + command + ChatColor.RED + " set on menu " + ChatColor.GOLD + menu.getMenuName() + ChatColor.LIGHT_PURPLE + " Remove the condition parameter or use condition:-1 for removing all condtiions.");
         }
-        menu.removeCommand(slot, command.toLowerCase());
+        menu.removeCommand(slot, command);
         plugin.saveMenuManager();
         return new CommandResponse(ChatColor.LIGHT_PURPLE + "Command: " + ChatColor.GOLD + command + ChatColor.LIGHT_PURPLE + " removed on slot: " + ChatColor.GOLD + slot + ChatColor.LIGHT_PURPLE + " on menu: " + ChatColor.GOLD + menu.getMenuName());
     }

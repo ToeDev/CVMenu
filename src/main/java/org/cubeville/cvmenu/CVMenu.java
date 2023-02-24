@@ -107,13 +107,13 @@ public class CVMenu extends JavaPlugin {
         return false;
     }
 
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    /*public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> out = commandParser.getCompletions(sender, args);
         if(out == null) {
             return new ArrayList<>(menuManager.getAllMenuNames());
         }
         return out;
-    }
+    }*/
 
     public void onDisable() {
         cvMenu = null;

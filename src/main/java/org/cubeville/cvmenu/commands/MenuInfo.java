@@ -64,21 +64,6 @@ public class MenuInfo extends Command {
                         out.add(cond);
                     }
                 }
-                TextComponent eveLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "BQ Events: ");
-                TextComponent eveLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
-                eveLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addevent " + menu.getMenuName() + " slot:" + slot + " event:"));
-                eveLblClk.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Add event to slot: " + slot).create()));
-                eveLbl.addExtra(eveLblClk);
-                out.add(eveLbl);
-                if(menu.getEventsBQ(slot) != null && !menu.getEventsBQ(slot).isEmpty()) {
-                    for(String event : menu.getEventsBQ(slot)) {
-                        TextComponent eve = new TextComponent("  - "+ event);
-                        eve.setColor(ChatColor.BLUE);
-                        eve.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/menu removeevent " + menu.getMenuName() + " slot:" + slot + " event:\"" + event + "\""));
-                        eve.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Remove event: " + event).create()));
-                        out.add(eve);
-                    }
-                }
                 TextComponent cmdLbl = new TextComponent(org.bukkit.ChatColor.GOLD + "Commands: ");
                 TextComponent cmdLblClk = new TextComponent(org.bukkit.ChatColor.DARK_GREEN + "[" + org.bukkit.ChatColor.BLUE + "Add" + org.bukkit.ChatColor.DARK_GREEN + "]");
                 cmdLblClk.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/menu addcommand " + menu.getMenuName() + " slot:" + slot + " command:"));
@@ -108,16 +93,6 @@ public class MenuInfo extends Command {
                 }
             }
             out.add(condStatus);
-            TextComponent eveStatus = new TextComponent(org.bukkit.ChatColor.GOLD + "Contains BQ Event(s): ");
-            for(int i = 0; i < menu.getSize(); i++) {
-                if(menu.getEventsBQ(i) != null && menu.getEventsBQ(i).size() >= 1) {
-                    eveStatus.addExtra(org.bukkit.ChatColor.BLUE + "true");
-                    break;
-                } else if(i == menu.getSize() - 1) {
-                    eveStatus.addExtra(org.bukkit.ChatColor.BLUE + "false");
-                }
-            }
-            out.add(eveStatus);
             TextComponent cmdStatus = new TextComponent(org.bukkit.ChatColor.GOLD + "Contains Command(s): ");
             for(int i = 0; i < menu.getSize(); i++) {
                 if(menu.getCommands(i) != null && menu.getCommands(i).size() >= 1) {

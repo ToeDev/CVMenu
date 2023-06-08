@@ -21,7 +21,6 @@ public class MenuContainer implements ConfigurationSerializable {
     private Inventory inventory;
 
     private final Map<Integer, Set<String>> conditionsBQ;
-    private final Map<Integer, Set<String>> eventsBQ;
     private final Map<Integer, Set<String>> commands;
 
     private final Map<Integer, Boolean> slotCloses;
@@ -31,7 +30,6 @@ public class MenuContainer implements ConfigurationSerializable {
     public MenuContainer(Map<String, Object> config) {
         menuName = (String) config.get("name");
         conditionsBQ = new HashMap<>();
-        eventsBQ = new HashMap<>();
         commands = new HashMap<>();
         slotCloses = new HashMap<>();
         slotRunCmdsFromConsole = new HashMap<>();
@@ -41,10 +39,6 @@ public class MenuContainer implements ConfigurationSerializable {
             if(slot.get("conditionsBQ") != null) {
                 Set<String> conditions = new HashSet<>((Collection<? extends String>) slot.get("conditionsBQ"));
                 conditionsBQ.put(i, conditions);
-            }
-            if(slot.get("eventsBQ") != null) {
-                Set<String> events = new HashSet<>((Collection<? extends String>) slot.get("eventsBQ"));
-                eventsBQ.put(i, events);
             }
             if(slot.get("commands") != null) {
                 Set<String> cmds = new HashSet<>((Collection<? extends String>) slot.get("commands"));
@@ -71,9 +65,6 @@ public class MenuContainer implements ConfigurationSerializable {
             List<String> condList = new ArrayList<>();
             if(conditionsBQ.get(i) != null && !conditionsBQ.get(i).isEmpty()) condList.addAll(conditionsBQ.get(i));
             out.put("conditionsBQ", condList);
-            List<String> eveList = new ArrayList<>();
-            if(eventsBQ.get(i) != null && !eventsBQ.get(i).isEmpty()) eveList.addAll(eventsBQ.get(i));
-            out.put("eventsBQ", eveList);
             List<String> cmdList = new ArrayList<>();
             if(commands.get(i) != null && !commands.get(i).isEmpty()) cmdList.addAll(commands.get(i));
             out.put("commands", cmdList);
@@ -94,7 +85,6 @@ public class MenuContainer implements ConfigurationSerializable {
         menuName = name;
         inventory = Bukkit.createInventory(null, size, name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
         conditionsBQ = new HashMap<>();
-        eventsBQ = new HashMap<>();
         commands = new HashMap<>();
         slotCloses = new HashMap<>();
         slotRunCmdsFromConsole = new HashMap<>();
@@ -106,7 +96,6 @@ public class MenuContainer implements ConfigurationSerializable {
         menuName = name;
         inventory = Bukkit.createInventory(null, size, name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
         conditionsBQ = new HashMap<>();
-        eventsBQ = new HashMap<>();
         commands = new HashMap<>();
         slotCloses = new HashMap<>();
         slotRunCmdsFromConsole = new HashMap<>();
@@ -117,7 +106,6 @@ public class MenuContainer implements ConfigurationSerializable {
         menuName = name;
         inventory = Bukkit.createInventory(owner, size, name + ChatColor.RESET); //ChatColor.RESET Needed to allow cvloadouts and cvmenus to have duplicate inventory titles
         conditionsBQ = new HashMap<>();
-        eventsBQ = new HashMap<>();
         commands = new HashMap<>();
         slotCloses = new HashMap<>();
         slotRunCmdsFromConsole = new HashMap<>();
@@ -224,38 +212,6 @@ public class MenuContainer implements ConfigurationSerializable {
 
     public void removeAllConditionsBQ(int slot) {
         conditionsBQ.remove(slot);
-    }
-
-    public Set<String> getEventsBQ(int slot) {
-        if(eventsBQ.get(slot) != null) {
-            return eventsBQ.get(slot);
-        }
-        return null;
-    }
-
-    public boolean containsEventBQ(int slot, String event) {
-        if(eventsBQ.get(slot) == null) {
-            return false;
-        }
-        return eventsBQ.get(slot).contains(event.toLowerCase());
-    }
-
-    public void addEventBQ(int slot, String event) {
-        if(eventsBQ.get(slot) == null) {
-            Set<String> events = new HashSet<>();
-            events.add(event);
-            eventsBQ.put(slot, events);
-        } else {
-            eventsBQ.get(slot).add(event.toLowerCase());
-        }
-    }
-
-    public void removeEventBQ(int slot, String event) {
-        eventsBQ.get(slot).remove(event.toLowerCase());
-    }
-
-    public void removeAllEventsBQ(int slot) {
-        eventsBQ.remove(slot);
     }
 
     public Set<String> getCommands(int slot) {

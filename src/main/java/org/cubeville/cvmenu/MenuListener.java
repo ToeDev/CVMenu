@@ -63,15 +63,6 @@ public class MenuListener implements Listener {
                     }
                 }
             }
-            if(menu.getEventsBQ(event.getRawSlot()) != null) {
-                for(String eventBQ : menu.getEventsBQ(event.getSlot())) {
-                    try {
-                        BetonQuest.event(PlayerConverter.getID(player), new EventID(null, eventBQ));
-                    } catch (ObjectNotFoundException e) {
-                        System.out.println(eventBQ + "not a valid event!");
-                    }
-                }
-            }
             if(menu.doesClose(event.getSlot())) {
                 player.closeInventory();
             }

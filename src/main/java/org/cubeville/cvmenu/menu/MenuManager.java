@@ -49,6 +49,13 @@ public class MenuManager implements ConfigurationSerializable {
     }
 
     //API USAGE ONLY
+    public void showTempMenu(String menu, Player owner) {
+        if(getTempMenu(menu, owner) != null) {
+            owner.openInventory(getTempMenu(menu, owner).getDisplayInventory(owner));
+        }
+    }
+
+    //API USAGE ONLY
     public void createMenu(String name, int size) {
         menus.put(name.toLowerCase(), new MenuContainer(name, size));
     }
@@ -97,11 +104,21 @@ public class MenuManager implements ConfigurationSerializable {
         this.plugin = plugin;
     }
 
-    public void removeTempMenus() {
-        for(MenuContainer menu : menus.values()) {
+    public Map<String, MenuContainer> removeTempMenus() {
+        Map<String, MenuContainer> tempMenus = new HashMap<>();
+        Map<String, MenuContainer> menusCopy = new HashMap<>(menus);
+        for(MenuContainer menu : menusCopy.values()) {
             if(menu.getInventory().getHolder() != null) {
+                tempMenus.put(menu.getMenuName(), menu);
                 menus.values().remove(menu);
             }
+        }
+        return tempMenus;
+    }
+
+    public void readdTempMenus(Map<String, MenuContainer> tempMenus) {
+        for(MenuContainer menu : tempMenus.values()) {
+            this.menus.put(menu.getMenuName(), menu);
         }
     }
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +81,12 @@ public class CVMenu extends JavaPlugin {
 
         commandParser.addCommand(new MenuDisplay(this));
 
+        commandParser.addCommand(new TempMenuCreate(this));
+        commandParser.addCommand(new TempMenuSetItem(this));
+        commandParser.addCommand(new TempMenuDisplay(this));
+        commandParser.addCommand(new TempMenuSetClose(this));
+        commandParser.addCommand(new TempMenuAddCommand(this));
+
         Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
         logger.info(ChatColor.LIGHT_PURPLE + "Plugin Enabled Successfully");
     }
@@ -93,9 +100,10 @@ public class CVMenu extends JavaPlugin {
     }
 
     public void saveMenuManager() {
-        this.menuManager.removeTempMenus();
+        Map<String, MenuContainer> tempMenus = this.menuManager.removeTempMenus();
         getConfig().set("MenuManager", menuManager);
         saveConfig();
+        this.menuManager.readdTempMenus(tempMenus);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
